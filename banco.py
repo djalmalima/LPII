@@ -192,4 +192,3 @@ class Conta():
         extrato = []
         extrato = self.operações
         return extrato
-
