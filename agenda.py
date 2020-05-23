@@ -423,13 +423,22 @@ class Contato:
             '345' em qualquer lugar: '11999888345', 'João do 345',
             'joao345@exemplo.com'
         """
+        texto_emails = str(self.emails)
+        texto_telefones = str(self.telefones)
+
         if valor_busca == '':
             return False
-        if valor_busca in self.nome or valor_busca in self.emails or valor_busca in self.telefones:
+        if valor_busca in self.nome:
             return True
+        if valor_busca in texto_emails:
+            return True
+        if valor_busca in texto_telefones:
+            return True
+        else:
+            return False
 
 
-    def create_dump(obj):
+    def create_dump(self, obj):
         """
         Retorna um dicionário com os dados do contato:
         Pares chave-valor:
