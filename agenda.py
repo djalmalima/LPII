@@ -447,7 +447,8 @@ class Contato:
         Representação de um contato, use o padrão:
         '<Contato: nome-do-contato-aqui>'
         """
-        pass
+        return f'<Contato: {self.nome}>'
+
 
 
 class Agenda:
@@ -486,13 +487,10 @@ class Agenda:
         ser adicionado à lista
         """
         busca_contatos = []
-        for item in self.contatos:
-            lista_busca = item.items()
-            for i in lista_busca:
-                if valor_busca in i:
-                    busca_contatos.append(item)
-                else:
-                    return busca_contatos
+        for contato in self.contatos:
+            if contato.buscar(valor_busca):
+                busca_contatos.append(contato)
+        return busca_contatos
         
         
 
