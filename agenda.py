@@ -245,14 +245,14 @@ class Email:
         Retorna o endereço de email para ser a representação serializada
         de email no arquivo json.
         """
-        pass
+        return self.email
 
     def __repr__(self) -> str:
         """
         Retorna uma string representando o objeto do tipo email
         Siga o padrão usado para a representação de Telefone
         """
-        pass
+        return f'<Email: {self.email}>'
 
 
 class Contato:
@@ -283,9 +283,9 @@ class Contato:
 
     def __init__(self, nome: str, telefone: str, email: str):
         self.nome = nome
-        self.telefone = Telefone(telefone)
+        
         self.telefones = {"principal": Telefone(telefone)}
-        self.email = Email(email)
+        
         self.emails = {"principal": Email(email)}
 
         
@@ -423,9 +423,13 @@ class Contato:
             '345' em qualquer lugar: '11999888345', 'João do 345',
             'joao345@exemplo.com'
         """
-        pass
+        if valor_busca == '':
+            return False
+        if valor_busca in self.nome or valor_busca in self.emails or valor_busca in self.telefones:
+            return True
 
-    def create_dump(self):
+
+    def create_dump(obj):
         """
         Retorna um dicionário com os dados do contato:
         Pares chave-valor:
@@ -433,7 +437,10 @@ class Contato:
         'telefones': dicionário de telefones do contato
         'emails': dicionário de emails do contato.
         """
-        pass
+        try:
+            return obj.to_json()
+        except AttributeError:
+            return obj.__dict__
 
     def __repr__(self):
         """
@@ -503,8 +510,8 @@ class Agenda:
         do contato verificando se o primeiro valor da tupla é igual ao tipo
         dado. Se sim, o telefone a ser chamado é o segundo valor da tupla.
         """
-        busca_contatos(valor_busca)
-        print('Ligando para' {}":"{}', nome, telefone)
+        # busca_contatos(valor_busca)
+        # print('Ligando para' {}":"{}', nome, telefone)
 
 
         pass
