@@ -438,7 +438,7 @@ class Contato:
             return False
 
 
-    def create_dump(self, obj):
+    def create_dump(self):
         """
         Retorna um dicionário com os dados do contato:
         Pares chave-valor:
@@ -446,10 +446,14 @@ class Contato:
         'telefones': dicionário de telefones do contato
         'emails': dicionário de emails do contato.
         """
-        try:
-            return obj.to_json()
-        except AttributeError:
-            return obj.__dict__
+        expContato = {}
+        expContato["nome"] = self.nome
+        expContato["telefones"] = self.get_telefones()
+        expContato["emails"] = self.get_emails()
+
+        return expContato
+        
+
 
     def __repr__(self):
         """
@@ -517,11 +521,15 @@ class Agenda:
         do contato verificando se o primeiro valor da tupla é igual ao tipo
         dado. Se sim, o telefone a ser chamado é o segundo valor da tupla.
         """
-        # busca_contatos(valor_busca)
-        # print('Ligando para' {}":"{}', nome, telefone)
+                
+        listagem_contatos = self.busca_contatos(valor_busca)
+        for contato in listagem_contatos:
+            telefonesContato = contato.lista_telefones()
+            for telefone in telefonesContato:
+                if (telefone[0] == tipo):
+                    return 'Ligando para '+ contato.nome + ': ' + str(telefone[1])
 
 
-        pass
 
     def apagar_contato(self, email_busca) -> str:
         """
@@ -533,7 +541,14 @@ class Agenda:
         Se nenhum contato for encontrado, retorna a mensagem:
         'Nenhum contato corresponde ao email dado.'
         """
-        pass
+        listagem_emails = Contato.lista_emails(email_busca)
+        if listagem_emails == '':
+            return 'Nenhum contato corresponde ao email dado'
+        else:
+            for contato in listagem_emails:
+                self.contatos.pop(contato)
+                return 'Contato:'+ contato.nome + 'excluído com sucesso!'
+
 
     def exportar_contatos(self, nome_arquivo: str) -> None:
         """
@@ -557,8 +572,18 @@ class Agenda:
               como parâmetro nomeado `indent` um valor inteiro positivo.
               Valores comuns são 2 ou 4.
         """
-        pass
+        if (nome_arquivo[-4:] != '.json'):
+            nome_arquivo += '.json'
 
+        exp_contatos = []
+
+        for contato in self.contatos:
+            exp_contatos.append(contato.create_dump())
+
+        arquivo = open(nome_arquivo, 'w')
+        arquivo.write(json.dumps(exp_contatos, default=dumper, indent=4, ensure_ascii=False))
+        arquivo.close()
+        
     def carregar_contatos(self, nome_arquivo: str) -> None:
         """
         Método bônus - não será considerado para a correção
