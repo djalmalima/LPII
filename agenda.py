@@ -590,4 +590,10 @@ class Agenda:
         Ler um arquivo json exportado pelo método anterior e
         carregar os contatos na agenda.
         """
-        pass
+        
+        with open(nome_arquivo,'w') as json_file:
+            contatos = json.loads(json_file)
+            for c in contatos:
+                c.novo_contato()
+        json_file.close()
+
