@@ -1,10 +1,11 @@
 # Linguagem de Programação II
-# Atividade Contínua 04 - Classes e encapsulamento
+# Atividade Contínua 05 - Classes e encapsulamento
 #
-# e-mails: djalma.lima@aluno.faculdadeimpacta.com.br
+# e-mail: djalma.lima@aluno.faculdadeimpacta.com.br
 
 from typing import List, Tuple
 import json
+import os
 
 
 def dumper(obj):
@@ -596,4 +597,4 @@ class Agenda:
             for c in contatos:
                 c.novo_contato()
         json_file.close()
-
+    
