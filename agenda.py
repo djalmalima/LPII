@@ -5,7 +5,6 @@
 
 from typing import List, Tuple
 import json
-import os
 
 
 def dumper(obj):
